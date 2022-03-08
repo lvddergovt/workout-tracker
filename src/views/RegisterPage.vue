@@ -25,6 +25,14 @@
         <label for="confirmPassword" class="mb-1 text-sm text-at-light-green">Confirm password</label>
         <input type="text" required class="p-2 text-gray-500 focus:outline-none" id="confirmPassword" v-model="confirmPassword" />
       </div>
+
+      <button type="submit" class="mt-6 py-2 px-6 rounded-sm self-start text-sm text-white bg-at-light-green duration-200 border-solid border-2 border-transparent hover:border-at-light-green hover:bg-white hover:text-at-light-green">
+        Register
+      </button>
+
+      <router-link class="text-sm mt-6 text-center" :to="{ name: 'Login' }">
+        Already have an account? <span class="text-at-light-green">Login</span>
+      </router-link>
     </form>
 
   </div>
