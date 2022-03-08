@@ -1,4 +1,4 @@
-# workout-tracker
+#💪 Workout Tracker
 
 ## Project setup
 ```
