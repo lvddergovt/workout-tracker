@@ -10,7 +10,7 @@
         <router-link class="cursor-pointer" :to="{ name: 'Home' }">Home</router-link>
         <router-link class="cursor-pointer" :to="{ name: 'Create' }">Create</router-link>
         <router-link class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
-        <li class="cursor-pointer">Logout</li>
+        <li class="cursor-pointer" @click="logout">Logout</li>
       </ul>
     </nav>
   </header>
@@ -19,16 +19,32 @@
 
 
 <script>
+import { supabase } from "../supabase/init";
+import { useRouter } from "vue-router";
+
 export default {
   setup() {
 
+    const router = useRouter();
     // get user from store
 
     // setup ref to router
 
     // logout function
+    const logout = async() => {
+      try {
+        const { error } = await supabase.auth.signOut();
+        if (error) throw error;
+        router.push({ name: "Login" });
+      }
+      catch(error) {
+        console.log(error)
+      }
+    }
 
-    return {};
+    return {
+      logout
+    };
   }
 
 }
