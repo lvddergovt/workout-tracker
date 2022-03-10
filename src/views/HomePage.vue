@@ -1,8 +1,9 @@
 <template>
-  <div></div>
+  <h1>Home</div>
 </template>
 
 <script>
+import { supabase } from "../supabase/init";
 
 export default {
   name: "Home",
@@ -10,7 +11,8 @@ export default {
   setup() {
 
     // create data / vars
-
+    const user = supabase.auth.user()
+    
     // get data
 
     // run data function
