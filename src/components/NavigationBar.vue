@@ -2,15 +2,18 @@
   <header class="bg-at-light-green">
     <nav class="container py-5 px-4 flex flex-col gap-4 items-center sm:flex-row">
       <div class="flex items-center gap-x-4">
-        <img class="w-14" src="../assets/images/dumbbell-light.png" alt="">
-        <h1 class="text-lg text-white">Active Tracker</h1>
+        <router-link class="cursor-pointer flex flex-row items-center" :to="{ name: 'Home' }">
+          <img class="w-14 mx-3" src="../assets/images/dumbbell-light.png" alt="">
+          <h1 class="text-lg text-white">Active Tracker</h1>
+        </router-link>
+        
       </div>
 
       <ul class="flex flex-1 justify-end gap-x-10">
         <router-link class="cursor-pointer" :to="{ name: 'Home' }">Home</router-link>
-        <router-link class="cursor-pointer" :to="{ name: 'Create' }">Create</router-link>
-        <router-link class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
-        <li class="cursor-pointer" @click="logout">Logout</li>
+        <router-link v-if="user" class="cursor-pointer" :to="{ name: 'Create' }">Create</router-link>
+        <router-link v-if="!user" class="cursor-pointer" :to="{ name: 'Login' }">Login</router-link>
+        <li v-if="user" class="cursor-pointer" @click="logout">Logout</li>
       </ul>
     </nav>
   </header>
@@ -21,29 +24,27 @@
 <script>
 import { supabase } from "../supabase/init";
 import { useRouter } from "vue-router";
+import store from "../store/index";
+import { computed } from "vue";
 
 export default {
   setup() {
 
-    const router = useRouter();
     // get user from store
+    const user = computed(() => store.state.user);
 
     // setup ref to router
+    const router = useRouter();
 
     // logout function
     const logout = async() => {
-      try {
-        const { error } = await supabase.auth.signOut();
-        if (error) throw error;
-        router.push({ name: "Login" });
-      }
-      catch(error) {
-        console.log(error)
-      }
+      await supabase.auth.signOut();
+      router.push({ name: "Login" });
     }
 
     return {
-      logout
+      logout,
+      user
     };
   }
 
